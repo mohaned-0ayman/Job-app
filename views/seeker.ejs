@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"><%= seeker.name %>'s Dashboard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#jobListings">Job Listings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#jobApps">Job Applications</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#editProfile">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#logout" id="logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Available Job Listings -->
+<div class="container mt-5">
+    <h2 id="jobListings">Available Job Listings</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Level</th>
+            <th>Type</th>
+            <th>Salary</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% jobs.forEach(job => { %>
+            <tr>
+                <td><%= job.title %></td>
+                <td><%= job.company %></td>
+                <td><%= job.location %></td>
+                <td><%= job.level %></td>
+                <td><%= job.type %></td>
+                <td><%= job.salary %></td>
+                <td>
+                    <form action=<%= `/jobApps/add/${seeker.id}/${job.id}` %> method="post">
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<!-- Job Applications -->
+<div class="container mt-5">
+    <h2 id="jobApps">Job Applications</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Level</th>
+            <th>Type</th>
+            <th>Salary</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% appliedJobs.forEach(job => { %>
+        <tr>
+            <td><%= job.title %></td>
+            <td><%= job.company %></td>
+            <td><%= job.location %></td>
+            <td><%= job.level %></td>
+            <td><%= job.type %></td>
+            <td><%= job.salary %></td>
+            <td>
+                <form action=<%= `/jobApps/delete/${seeker.id}/${job.id}` %> method="post">
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+                <form action="" method=""></form>
+            </td>
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<!-- Edit Profile -->
+<div class="container mt-5">
+    <h2 id="editProfile">Edit Profile</h2>
+    <form action=<%= `/seeker/edit/${seeker.id}` %> method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+        </div>
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" class="form-control" id="location" placeholder="Enter location" name="location">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    const logoutButton = document.getElementById("logout");
+
+    logoutButton.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        // Make a post request to the /logout route
+        fetch("/logout", {
+            method: "post",
+        })
+            .then((response) => {
+                console.log(response)
+                if (response.ok) {
+                    // Redirect the user to the home page
+                    window.location.href = "/";
+                } else {
+                    console.error("Error logging out.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error logging out:", error);
+            });
+    });
+</script>
+</body>
+</html>
