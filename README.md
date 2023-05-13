@@ -11,4 +11,7 @@ Employers can create an account on the website where they can post their job vac
 The website will be developed using Node.js and Express.js with a NoSQL database such as MongoDB or Firebase. The front-end will be developed using HTML5, CSS3, and JavaScript with a responsive design that works on all devices.
 
 Overall, this project aims to provide a platform for both job seekers and employers to connect in an efficient and effective manner. With its user-friendly interface and powerful features, this job board website will help users find the right opportunities while helping employers find the right candidates for their open positions.
-![Uploading Screenshot (40).png…]()
+
+
+![Screenshot (40)](https://github.com/mohaned-0ayman/Job-app/assets/103074655/3086cca6-6d8e-4ee8-857b-95b6206bec46)
+![Screenshot (41)](https://github.com/mohaned-0ayman/Job-app/assets/103074655/35345a93-d91b-498b-b3cb-19d3c364364e)
